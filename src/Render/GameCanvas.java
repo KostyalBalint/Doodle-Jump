@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class GameCanvas extends Canvas {
 
-    GameCanvas() {
+    public GameCanvas() {
         setBackground(Color.white);
     }
 

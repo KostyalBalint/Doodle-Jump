@@ -1,4 +1,4 @@
-import Render.GameFrame;
+import Game.GameFrame;
 
 public class main {
     static GameFrame gameFrame;

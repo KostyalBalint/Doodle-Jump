@@ -6,6 +6,12 @@ import math.Vector2;
 import java.awt.*;
 
 public class Doodler extends Item implements UpdatableIF, RenderableIF {
+    public static enum Dir{
+        LEFT,
+        RIGHT,
+        NONE,
+    }
+    private Vector2 screenSize;
 
     public static int maxJumpHeight = 200;
     private float g = 0.5f;     //Gravity
@@ -15,13 +21,28 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
     private float absoluteMaxHeight = 0;
 
     //Put the doodler in the middle of the screen
-    public Doodler(Vector2 position) {
+    public Doodler(Vector2 position, Vector2 screenSize) {
         super(position.add(-50 / 2.0f, -25 / 2.0f), new Vector2(50, 75));
         absoluteMaxHeight = this.getPosition().y;
+        this.screenSize = screenSize;
     }
 
     public float getAbsoluteMaxHeight(){
         return absoluteMaxHeight;
+    }
+
+    public void setAcceleration(Dir ax) {
+        switch (ax) {
+            case LEFT:
+                this.ax = -1.5f;
+                break;
+            case RIGHT:
+                this.ax = 1.5f;
+                break;
+            case NONE:
+                this.ax = 0f;
+                break;
+        }
     }
 
     @Override
@@ -34,9 +55,22 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         }
 
         if (this.getBottomCenter().y > 600) {
-            vy *= -1;
+            vy *= -1f;  //Bounce
         } else {
-            vy += g;
+            vy += g;    //Affect doodler by gravity
+        }
+
+        if(ax == 0) vx *= 0.85f;    //Slow down doodler when not moving vertically
+        if(Math.abs(vx) <= 20){
+            vx += ax;   //Affect doodler by acceleration
+        }
+
+        //Limit the doodler into the screen
+        if(this.getPosition().x < 0) {
+            this.setX(screenSize.x);
+        }
+        if(this.getPosition().x > screenSize.x) {
+            this.setX(0);
         }
     }
 
