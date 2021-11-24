@@ -1,6 +1,7 @@
 package Item;
 
 import math.Vector2;
+import Camera.Camera;
 
 import javax.swing.*;
 
@@ -16,17 +17,25 @@ public abstract class Item extends JButton {
     public Item(Vector2 position, Vector2 size) {
         this.position = position;
         this.size = size;
-        this.setBounds((int)this.position.x, (int)this.position.y, (int)this.position.x, (int)this.position.y);
+        this.setBounds((int)this.position.x, (int)this.position.y, (int)this.size.x, (int)this.size.y);
+        render();
     }
 
     public void setX(float x) {
         this.position.x = x;
-        this.setLocation((int)this.position.x, (int)this.position.y);
+        render();
     }
 
     public void setY(float y) {
         this.position.y = y;
-        this.setLocation((int)this.position.x, (int)this.position.y);
+        render();
+    }
+
+    protected void render(){
+        Camera camera = Camera.getInstance();
+        Vector2 drawPosition = camera.getPosition().add(this.position);
+        System.out.println(drawPosition);
+        this.setLocation((int)drawPosition.x, (int)drawPosition.y);
     }
 
     public Vector2 getPosition() {
