@@ -39,6 +39,6 @@ public class Camera implements UpdatableIF {
 
     @Override
     public void update() {
-        this.position.y += 0.5;
+
     }
 }

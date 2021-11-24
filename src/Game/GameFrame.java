@@ -53,21 +53,21 @@ public class GameFrame extends JFrame implements UpdatableIF{
     }
 
     private void initComponents() {
-        generatePlatforms(0, height);
+        generatePlatforms(height, -30*height);
     }
 
     private void generatePlatforms(int startY, int endY) {
         int currentY = startY;
 
-        while (currentY < endY) {
+        while (currentY > endY) {
 
             int x = random.nextInt(width - Platform.width);
 
             //Maximum height difference between platforms must be lower than the maxJumpHeight of the Doodler
-            int dH = random.nextInt(Doodler.maxJumpHeight);
+            int dH = random.nextInt(Doodler.maxJumpHeight / 4);
 
             Platform platform = new Platform(new Vector2(x, dH + currentY));
-            currentY += dH;
+            currentY -= dH;
 
             platformList.add(platform);
         }
@@ -76,7 +76,7 @@ public class GameFrame extends JFrame implements UpdatableIF{
 
     @Override
     public void update() {
-        doodler.update();   //Update doodler
+        doodler.update(platformList);   //Update doodler
         //platformList.forEach(Item.Platform::update);//Update platforms
         Camera.getInstance().setY( -1 * (doodler.getAbsoluteMaxHeight() - (height/2.0f)));
         Camera.getInstance().update();  //Update the camera

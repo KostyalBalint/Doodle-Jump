@@ -4,6 +4,7 @@ import Render.RenderableIF;
 import math.Vector2;
 
 import java.awt.*;
+import java.util.LinkedList;
 
 public class Doodler extends Item implements UpdatableIF, RenderableIF {
     public static enum Dir{
@@ -12,8 +13,9 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         NONE,
     }
     private Vector2 screenSize;
+    private LinkedList<Platform> platforms; //TODO: Delete this => It's Ugliest Code Ever
 
-    public static int maxJumpHeight = 200;
+    public static int maxJumpHeight = 300;
     private float g = 0.5f;     //Gravity
     private float ax = 0.0f;    //Acceleration in X coordinate, controlled by the player
     private float vy = 0;       //Velocity in Y coordinate
@@ -45,7 +47,6 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         }
     }
 
-    @Override
     public void update() {
         this.setY((this.getPosition().y + vy));
         this.setX((this.getPosition().x + vx));
@@ -54,11 +55,17 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
             absoluteMaxHeight = this.getPosition().y;
         }
 
-        if (this.getBottomCenter().y > 600) {
-            vy *= -1f;  //Bounce
-        } else {
-            vy += g;    //Affect doodler by gravity
+        //Check if the doodler is on a platform
+        Boolean onPlatform = false;
+        for(Platform platform : platforms) {
+            if(platform.isCollidingFromTop(this) && vy > 0) {
+                onPlatform = true;
+                this.setY(platform.getPosition().y - this.getSize().height);
+                //vy = -1f * (float)Math.sqrt(vy * vy - 2 * g * (this.getPosition().y - platform.getPosition().y - platform.getHeight()));
+                vy = -1f *(float) Math.sqrt(2 * g * maxJumpHeight);
+            }
         }
+        if(!onPlatform) vy += g;    //Affect doodler by gravity
 
         if(ax == 0) vx *= 0.85f;    //Slow down doodler when not moving vertically
         if(Math.abs(vx) <= 20){
@@ -72,6 +79,11 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         if(this.getPosition().x > screenSize.x) {
             this.setX(0);
         }
+    }
+
+    public void update(LinkedList<Platform> platforms) {
+        this.platforms = platforms;
+        update();
     }
 
     @Override
