@@ -1,9 +1,11 @@
+import Item.UpdatableIF;
+
 public class GameLoop extends Thread {
 
     private static final int FPS = 60;
     private final UpdatableIF fn;
 
-    GameLoop(UpdatableIF fn){
+    public GameLoop(UpdatableIF fn){
         this.fn = fn;
     }
 

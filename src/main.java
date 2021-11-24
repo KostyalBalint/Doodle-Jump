@@ -1,3 +1,5 @@
+import Render.GameFrame;
+
 public class main {
     static GameFrame gameFrame;
     static GameLoop gameLoop;

@@ -3,13 +3,13 @@ package Item;
 import math.Vector2;
 import Camera.Camera;
 
-import javax.swing.*;
+import java.awt.*;
 
 /**
  * Item is an abstract class that is extended by all items that can be moved.
  * It stores the x and y coordinates of the item as double values, witch enables a more precise movement.
  */
-public abstract class Item extends JButton {
+public abstract class Item extends Rectangle {
 
     private Vector2 position;
     private Vector2 size;
@@ -18,24 +18,20 @@ public abstract class Item extends JButton {
         this.position = position;
         this.size = size;
         this.setBounds((int)this.position.x, (int)this.position.y, (int)this.size.x, (int)this.size.y);
-        render();
     }
 
     public void setX(float x) {
         this.position.x = x;
-        render();
     }
 
     public void setY(float y) {
         this.position.y = y;
-        render();
     }
 
-    protected void render(){
+    public Vector2 getRenderCoordinate(){
         Camera camera = Camera.getInstance();
         Vector2 drawPosition = camera.getPosition().add(this.position);
-        System.out.println(drawPosition);
-        this.setLocation((int)drawPosition.x, (int)drawPosition.y);
+        return drawPosition;
     }
 
     public Vector2 getPosition() {

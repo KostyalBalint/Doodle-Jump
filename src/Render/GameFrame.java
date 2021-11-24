@@ -1,9 +1,14 @@
+package Render;
+
 import Camera.Camera;
 import Item.Doodler;
 import Item.Platform;
+import Item.UpdatableIF;
+import Render.GameCanvas;
 import math.Vector2;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -14,7 +19,7 @@ public class GameFrame extends JFrame implements UpdatableIF {
 
     private Random random = new Random();
 
-    private JPanel panel;
+    private GameCanvas canvas;
 
     private final Doodler doodler;
     private LinkedList<Platform> platformList;
@@ -22,27 +27,26 @@ public class GameFrame extends JFrame implements UpdatableIF {
     public GameFrame() {
         super("Doodle Jump");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
         setSize(width, height);
         setLocationRelativeTo(null);
         setResizable(false);
 
         //Init camera
-        Camera.getInstance().setPosition(width/2, height/2);
-        Camera.getInstance().setViewPort(width, height);
+        Camera.getInstance().setPosition(0, 0);
 
-        panel = new JPanel(null);
+        //panel = new JPanel(null);
+        canvas = new GameCanvas();
+        this.add(canvas);
 
         doodler = new Doodler(new Vector2(width / 2.0f, height / 2.0f));
-        panel.add(doodler);
 
         platformList = new LinkedList<Platform>();
 
-        this.add(panel);
         initComponents();
     }
 
     private void initComponents() {
-        Camera.getInstance().setPosition(doodler.getX(), doodler.getY());
         generatePlatforms(0, height);
     }
 
@@ -60,19 +64,21 @@ public class GameFrame extends JFrame implements UpdatableIF {
             currentY += dH;
 
             platformList.add(platform);
-            panel.add(platform);
         }
 
     }
 
     @Override
     public void update() {
-        panel.update(panel.getGraphics());
-
         doodler.update();   //Update doodler
-
-        Camera.getInstance().update();
-
         //platformList.forEach(Item.Platform::update);//Update platforms
+        Camera.getInstance().setY(doodler.getAbsoluteMaxHeight() - (height/2.0f));
+        Camera.getInstance().update();  //Update the camera
+
+        //Render everything
+        LinkedList<RenderableIF> renderableList = (LinkedList<RenderableIF>) platformList.clone();
+        renderableList.addLast(doodler);
+        canvas.paint(canvas.getGraphics(), renderableList);
+        this.repaint();
     }
 }

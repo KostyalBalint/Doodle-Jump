@@ -1,8 +1,11 @@
 package Item;
 
 import math.Vector2;
+import Render.RenderableIF;
 
-public class Platform extends Item implements UpdatableIF {
+import java.awt.*;
+
+public class Platform extends Item implements UpdatableIF, RenderableIF {
 
     public static int width = 100;
     public static int height = 20;
@@ -13,6 +16,13 @@ public class Platform extends Item implements UpdatableIF {
 
     @Override
     public void update() {
-        render();
+
+    }
+
+    @Override
+    public void render(Graphics graphics) {
+        graphics.setColor(Color.ORANGE);
+        Vector2 drawPosition = this.getRenderCoordinate();
+        graphics.fillRect((int)drawPosition.x, (int)drawPosition.y, this.getSize().width, this.getSize().height);
     }
 }
