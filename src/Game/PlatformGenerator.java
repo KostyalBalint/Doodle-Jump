@@ -19,7 +19,7 @@ public class PlatformGenerator {
             int x = random.nextInt((int) (screenSize.x - Platform.width));
 
             //Maximum height difference between platforms must be lower than the maxJumpHeight of the Doodler
-            int dH = random.nextInt((Doodler.maxJumpHeight / 2) - Platform.height*3) + Platform.height*3;
+            int dH = random.nextInt((Doodler.maxJumpHeight / 2) - (Platform.height*3)) + (Platform.height*3);
 
             Platform platform = new Platform(new Vector2(x, dH + currentY));
             currentY -= dH;

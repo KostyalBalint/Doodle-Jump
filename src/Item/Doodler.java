@@ -95,6 +95,9 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         graphics.setColor(Color.BLACK);
         graphics.drawString("Score: " + getScore(), 20, 20);
 
+        //Print the coordinates of the doodler
+        graphics.drawString("X: " + this.getPosition().x + "Y: " + this.getPosition().y, 20, 40);
+
         graphics.setColor(Color.BLUE);
         Vector2 drawPosition = this.getRenderCoordinate();
         graphics.fillRect((int)drawPosition.x, (int)drawPosition.y, this.getSize().width, this.getSize().height);

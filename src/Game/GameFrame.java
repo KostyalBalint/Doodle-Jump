@@ -1,6 +1,7 @@
 package Game;
 
 import Camera.Camera;
+import Item.BlackHole;
 import Item.Doodler;
 import Item.Platform;
 import Item.UpdatableIF;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
 
+import static Game.BlackHoleGenerator.generateBlackHole;
 import static Game.PlatformGenerator.generatePlatforms;
 
 public class GameFrame extends JFrame implements UpdatableIF{
@@ -22,6 +24,7 @@ public class GameFrame extends JFrame implements UpdatableIF{
 
     private GameCanvas canvas;
     private final Doodler doodler;
+    private BlackHole blackHole;
     private LinkedList<Platform> platformList;
     private KeyListener keyListener;
     private int platformsGeneratedHeight;
@@ -65,6 +68,12 @@ public class GameFrame extends JFrame implements UpdatableIF{
         Camera.getInstance().setY( -1 * (doodler.getAbsoluteMaxHeight() - (height/3.0f)));
         Camera.getInstance().update();  //Update the camera
 
+        //Generate black hole
+        blackHole = generateBlackHole(this.blackHole, doodler.getScore(), new Vector2(width, height));
+        if(blackHole != null){
+            System.out.println(blackHole.x + " " + blackHole.y);
+        }
+
         //Generate platforms if needed
         if(doodler.getAbsoluteMaxHeight() - height < platformsGeneratedHeight) {
             platformsGeneratedHeight = generatePlatforms(platformsGeneratedHeight, platformsGeneratedHeight - height, new Vector2(width, height), platformList);
@@ -75,6 +84,9 @@ public class GameFrame extends JFrame implements UpdatableIF{
 
         //Render everything
         LinkedList<RenderableIF> renderableList = (LinkedList<RenderableIF>) platformList.clone();
+        if(blackHole != null) {
+            renderableList.addFirst(blackHole);
+        }
         renderableList.addLast(doodler);
         canvas.paint(canvas.getGraphics(), renderableList);
         this.repaint();
