@@ -2,19 +2,15 @@ package Game;
 
 import Item.Doodler;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class DoodlerListener extends JPanel implements KeyListener {
+public class DoodlerListener implements KeyListener {
 
     Doodler doodler;
 
     public DoodlerListener(Doodler doodler) {
         this.doodler = doodler;
-        addKeyListener(this);
-        setFocusable(true);
-        setVisible(true);
     }
 
     @Override

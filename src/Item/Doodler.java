@@ -33,6 +33,10 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         return absoluteMaxHeight;
     }
 
+    public int getScore(){
+        return -1 * (int)absoluteMaxHeight;
+    }
+
     public void setAcceleration(Dir ax) {
         switch (ax) {
             case LEFT:
@@ -60,8 +64,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         for(Platform platform : platforms) {
             if(platform.isCollidingFromTop(this) && vy > 0) {
                 onPlatform = true;
-                this.setY(platform.getPosition().y - this.getSize().height);
-                //vy = -1f * (float)Math.sqrt(vy * vy - 2 * g * (this.getPosition().y - platform.getPosition().y - platform.getHeight()));
+                //this.setY(platform.getPosition().y - this.getSize().height);
                 vy = -1f *(float) Math.sqrt(2 * g * maxJumpHeight);
             }
         }
@@ -88,6 +91,10 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
 
     @Override
     public void render(Graphics graphics) {
+        //Print absoluteMaxHeight as a score
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Score: " + getScore(), 20, 20);
+
         graphics.setColor(Color.BLUE);
         Vector2 drawPosition = this.getRenderCoordinate();
         graphics.fillRect((int)drawPosition.x, (int)drawPosition.y, this.getSize().width, this.getSize().height);

@@ -8,7 +8,7 @@ import java.awt.*;
 public class Platform extends Item implements UpdatableIF, RenderableIF {
 
     public static int width = 100;
-    public static int height = 10;
+    public static int height = 20;
 
     public Platform(Vector2 position) {
         super(position, new Vector2(width, height));

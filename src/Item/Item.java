@@ -76,8 +76,8 @@ public abstract class Item extends Rectangle {
     }
 
     public boolean isCollidingFromTop(Item item){
-        return this.getTopLeft().x < item.getBottomRight().x && this.getTopRight().x > item.getBottomLeft().x &&
-                this.getTopLeft().y < item.getBottomRight().y && this.getBottomRight().y > item.getBottomLeft().y;
+        return this.getTopLeft().x <= item.getBottomRight().x && this.getTopRight().x >= item.getBottomLeft().x &&
+                this.getTopLeft().y <= item.getBottomRight().y && this.getBottomRight().y >= item.getBottomLeft().y;
     }
 
 }

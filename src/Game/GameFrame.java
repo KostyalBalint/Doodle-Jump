@@ -10,20 +10,21 @@ import math.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.LinkedList;
-import java.util.Random;
+
+import static Game.PlatformGenerator.generatePlatforms;
 
 public class GameFrame extends JFrame implements UpdatableIF{
 
-    private static final int width = 800;
-    private static final int height = 600;
-
-    private Random random = new Random();
+    private static final int width = 600;
+    private static final int height = 800;
 
     private GameCanvas canvas;
     private final Doodler doodler;
     private LinkedList<Platform> platformList;
-    private JPanel keyListener;
+    private KeyListener keyListener;
+    private int platformsGeneratedHeight;
 
     public GameFrame() {
         super("Doodle Jump");
@@ -48,38 +49,29 @@ public class GameFrame extends JFrame implements UpdatableIF{
         platformList = new LinkedList<Platform>();
 
         keyListener = new DoodlerListener(doodler);
-        this.add(keyListener);
+        canvas.addKeyListener(keyListener);
+        this.addKeyListener(keyListener);
         initComponents();
     }
 
     private void initComponents() {
-        generatePlatforms(height, -30*height);
-    }
-
-    private void generatePlatforms(int startY, int endY) {
-        int currentY = startY;
-
-        while (currentY > endY) {
-
-            int x = random.nextInt(width - Platform.width);
-
-            //Maximum height difference between platforms must be lower than the maxJumpHeight of the Doodler
-            int dH = random.nextInt(Doodler.maxJumpHeight / 4);
-
-            Platform platform = new Platform(new Vector2(x, dH + currentY));
-            currentY -= dH;
-
-            platformList.add(platform);
-        }
-
+        platformsGeneratedHeight = generatePlatforms(height, -1*height, new Vector2(width, height), platformList);
     }
 
     @Override
     public void update() {
         doodler.update(platformList);   //Update doodler
         //platformList.forEach(Item.Platform::update);//Update platforms
-        Camera.getInstance().setY( -1 * (doodler.getAbsoluteMaxHeight() - (height/2.0f)));
+        Camera.getInstance().setY( -1 * (doodler.getAbsoluteMaxHeight() - (height/3.0f)));
         Camera.getInstance().update();  //Update the camera
+
+        //Generate platforms if needed
+        if(doodler.getAbsoluteMaxHeight() - height < platformsGeneratedHeight) {
+            platformsGeneratedHeight = generatePlatforms(platformsGeneratedHeight, platformsGeneratedHeight - height, new Vector2(width, height), platformList);
+            //System.out.println("Current platform count: " + platformList.size());
+        }
+        //Remove platforms that are out of the screen
+        platformList.removeIf(platform -> platform.getRenderCoordinate().y > height);
 
         //Render everything
         LinkedList<RenderableIF> renderableList = (LinkedList<RenderableIF>) platformList.clone();
