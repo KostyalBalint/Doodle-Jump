@@ -62,17 +62,26 @@ public class GameFrame extends JFrame implements UpdatableIF{
     }
 
     @Override
-    public void update() {
-        doodler.update(platformList);   //Update doodler
+    public void update(){
+        doodler.update(platformList, blackHole);   //Update doodler
         //platformList.forEach(Item.Platform::update);//Update platforms
-        Camera.getInstance().setY( -1 * (doodler.getAbsoluteMaxHeight() - (height/3.0f)));
+        if(doodler.isDead()){
+            //If doodler is dead, camera will fall down with the doodler
+            boolean gameOver = Camera.getInstance().fallDown(doodler, new Vector2(width, height));
+            if(gameOver){
+                //Render game over screen
+                canvas.renderGameOver();
+                this.repaint();
+                GameLoop.getInstance().stop();
+            }
+        }else{
+            //If doodler is not dead, camera follows doodler
+            Camera.getInstance().setY( -1 * (doodler.getAbsoluteMaxHeight() - (height/3.0f)));
+        }
         Camera.getInstance().update();  //Update the camera
 
         //Generate black hole
         blackHole = generateBlackHole(this.blackHole, doodler.getScore(), new Vector2(width, height));
-        if(blackHole != null){
-            System.out.println(blackHole.x + " " + blackHole.y);
-        }
 
         //Generate platforms if needed
         if(doodler.getAbsoluteMaxHeight() - height < platformsGeneratedHeight) {

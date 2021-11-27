@@ -1,14 +1,25 @@
+package Game;
+
 import Item.UpdatableIF;
 
 public class GameLoop extends Thread {
 
     private static final int FPS = 60;
-    private final UpdatableIF fn;
+    private UpdatableIF fn;
+    private static GameLoop instance;
 
-    public GameLoop(UpdatableIF fn){
+    public GameLoop(){}
+
+    public void setUpdateFunction(UpdatableIF fn){
         this.fn = fn;
     }
 
+    public static GameLoop getInstance(){
+        if(instance == null){
+            instance = new GameLoop();
+        }
+        return instance;
+    }
 
     public void run(){
         //Call fn.update() every 1s/FPS times

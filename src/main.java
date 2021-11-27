@@ -1,4 +1,5 @@
 import Game.GameFrame;
+import Game.GameLoop;
 
 public class main {
     static GameFrame gameFrame;
@@ -9,7 +10,8 @@ public class main {
         gameFrame.setVisible(true);
 
         try {
-            gameLoop = new GameLoop(gameFrame);
+            gameLoop = GameLoop.getInstance();
+            gameLoop.setUpdateFunction(gameFrame);
         }catch (Exception e) {
             e.printStackTrace();
         }

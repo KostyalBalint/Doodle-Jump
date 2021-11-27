@@ -4,6 +4,7 @@ import math.Vector2;
 import Camera.Camera;
 
 import java.awt.*;
+import java.awt.Image;
 
 /**
  * Item is an abstract class that is extended by all items that can be moved.
@@ -12,12 +13,13 @@ import java.awt.*;
 public abstract class Item extends Rectangle {
 
     private Vector2 position;
-    private Vector2 size;
+    //private Vector2 size;
+    private Image image;
 
-    public Item(Vector2 position, Vector2 size) {
+    public Item(Vector2 position, Dimension size) {
         this.position = position;
-        this.size = size;
-        this.setBounds((int)this.position.x, (int)this.position.y, (int)this.size.x, (int)this.size.y);
+        this.setSize(size);
+        this.setBounds((int)this.position.x, (int)this.position.y, (int)this.getSize().width, (int)this.getSize().height);
     }
 
     public void setX(float x) {
@@ -39,7 +41,7 @@ public abstract class Item extends Rectangle {
     }
 
     public Vector2 getBottomRight() {
-        return new Vector2(this.position.x + this.size.x, this.position.y + this.size.y);
+        return new Vector2(this.position.x + this.getSize().width, this.position.y + this.getSize().height);
     }
 
     public Vector2 getTopLeft() {
@@ -47,27 +49,27 @@ public abstract class Item extends Rectangle {
     }
 
     public Vector2 getTopRight() {
-        return new Vector2(this.position.x + this.size.x, this.position.y);
+        return new Vector2(this.position.x + this.getSize().width, this.position.y);
     }
 
     public Vector2 getBottomLeft() {
-        return new Vector2(this.position.x, this.position.y + this.size.y);
+        return new Vector2(this.position.x, this.position.y + this.getSize().height);
     }
 
     public Vector2 getTopCenter() {
-        return new Vector2(this.position.x + this.size.x / 2, this.position.y);
+        return new Vector2(this.position.x + this.getSize().width / 2, this.position.y);
     }
 
     public Vector2 getBottomCenter() {
-        return new Vector2(this.position.x + this.size.x / 2, this.position.y + this.size.y);
+        return new Vector2(this.position.x + this.getSize().width / 2, this.position.y + this.getSize().height);
     }
 
     public Vector2 getLeftCenter() {
-        return new Vector2(this.position.x, this.position.y + this.size.y / 2);
+        return new Vector2(this.position.x, this.position.y + this.getSize().height / 2);
     }
 
     public Vector2 getRightCenter() {
-        return new Vector2(this.position.x + this.size.x, this.position.y + this.size.y / 2);
+        return new Vector2(this.position.x + this.getSize().width, this.position.y + this.getSize().height / 2);
     }
 
     public boolean isColliding(Item item) {
@@ -80,4 +82,11 @@ public abstract class Item extends Rectangle {
                 this.getTopLeft().y <= item.getBottomRight().y && this.getBottomRight().y >= item.getBottomLeft().y;
     }
 
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public Image getImage() {
+        return image;
+    }
 }
