@@ -1,17 +1,14 @@
-import Game.GameFrame;
+import Game.Game;
 import Game.GameLoop;
 
 public class main {
-    static GameFrame gameFrame;
     static GameLoop gameLoop;
 
     public static void main(String[] args) {
-        gameFrame = new GameFrame();
-        gameFrame.setVisible(true);
 
         try {
             gameLoop = GameLoop.getInstance();
-            gameLoop.setUpdateFunction(gameFrame);
+            gameLoop.setUpdateFunction(Game.getInstance());
         }catch (Exception e) {
             e.printStackTrace();
         }

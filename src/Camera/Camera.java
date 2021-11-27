@@ -2,8 +2,7 @@ package Camera;
 
 import Item.Doodler;
 import Item.UpdatableIF;
-import Render.RenderableIF;
-import math.Vector2;
+import util.Vector2;
 
 import java.awt.*;
 
@@ -45,21 +44,21 @@ public class Camera implements UpdatableIF {
                 //Game Over
                 return true;
             }
-        }else{
+        } else {
             vy = doodler.getVelocity().y * 1.5f;
         }
         this.position.y -= vy;
         return false;
     }
 
-    public boolean fallDown(Doodler doodler, Vector2 screenSize) {
-        if(this.position.y + 1.5 * screenSize.y < doodler.getAbsoluteMaxHeight()) {
+    public boolean fallDown(Doodler doodler, Dimension screenSize) {
+        if (this.position.y + 1.5 * screenSize.height < doodler.getAbsoluteMaxHeight()) {
             vy *= 0.6;
-            if(vy < 0.1) {
+            if (vy < 0.1) {
                 //Game Over
                 return true;
             }
-        }else{
+        } else {
             vy += 1f;
             this.setY(this.getPosition().y - vy);
         }

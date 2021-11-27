@@ -1,4 +1,4 @@
-package math;
+package util;
 
 public class Vector2 {
     public static float TO_RADIANS = (1 / 180.0f) * (float) Math.PI;	//Multiply an angle in degrees by this constant to convert it to radians.

@@ -1,7 +1,7 @@
 package Item;
 
 import Render.RenderableIF;
-import math.Vector2;
+import util.Vector2;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

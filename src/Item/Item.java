@@ -1,10 +1,9 @@
 package Item;
 
-import math.Vector2;
 import Camera.Camera;
+import util.Vector2;
 
 import java.awt.*;
-import java.awt.Image;
 
 /**
  * Item is an abstract class that is extended by all items that can be moved.

@@ -1,7 +1,7 @@
 package Item;
 
 import Render.RenderableIF;
-import math.Vector2;
+import util.Vector2;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -16,7 +16,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         NONE,
     }
 
-    private Vector2 screenSize;
+    private Dimension screenSize; //TODO: Remove this, and use Game.getWindowSize() instead
     private LinkedList<Platform> platforms;
     private BlackHole blackHole;
     private Image leftImage;
@@ -31,7 +31,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
     private boolean died = false;
 
     //Put the doodler in the middle of the screen
-    public Doodler(Vector2 position, Vector2 screenSize) {
+    public Doodler(Vector2 position, Dimension screenSize) {
         super(position.add(-50 / 2.0f, -25 / 2.0f), new Dimension(50, 50));
         absoluteMaxHeight = this.getPosition().y;
         this.screenSize = screenSize;
@@ -41,7 +41,6 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
             this.setImage(leftImage);
             //Collision box is different size than the doodler image, this is because the left and right images
             this.setSize(new Dimension(this.getImage().getWidth(null) / 2, this.getImage().getHeight(null)));
-            System.out.println(this.getSize());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,16 +50,12 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         return absoluteMaxHeight;
     }
 
-    public int getScore() {
-        return -1 * (int) absoluteMaxHeight;
-    }
-
     public Vector2 getVelocity() {
         return new Vector2(vx, vy);
     }
 
     public boolean isDead() {
-        if (this.getRenderCoordinate().y > screenSize.y) {
+        if (this.getRenderCoordinate().y > screenSize.height) {
             died = true;
         }
         return died;
@@ -88,6 +83,27 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
             absoluteMaxHeight = this.getPosition().y;
         }
 
+        if (ax == 0) vx *= 0.85f;    //Slow down doodler when not moving vertically
+        if (Math.abs(vx) <= 20) {
+            vx += ax;   //Affect doodler by acceleration
+        }
+
+        if (vx > 0) {
+            //Right image
+            this.setImage(rightImage);
+        } else {
+            //Left image
+            this.setImage(leftImage);
+        }
+
+        //Limit the doodler into the screen
+        if (this.getBottomCenter().x < 0) {
+            this.setX(screenSize.width - this.getSize().width / 2);
+        }
+        if (this.getBottomCenter().x > screenSize.width) {
+            this.setX(this.getSize().width / 2);
+        }
+
         //Check if the doodler is on a platform
         Boolean onPlatform = false;
         for (Platform platform : platforms) {
@@ -100,29 +116,10 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         if (!onPlatform) vy += g;    //Affect doodler by gravity
 
         //Check if doodler is colliding with the black hole
-        if(blackHole != null && this.isColliding(blackHole)){
+        if(blackHole != null && this.isColliding(blackHole)) {
             died = true;
-        }
-
-        if (ax == 0) vx *= 0.85f;    //Slow down doodler when not moving vertically
-        if (Math.abs(vx) <= 20) {
-            vx += ax;   //Affect doodler by acceleration
-        }
-
-        if(vx > 0){
-            //Right image
-            this.setImage(rightImage);
-        }else {
-            //Left image
-            this.setImage(leftImage);
-        }
-
-        //Limit the doodler into the screen
-        if (this.getBottomCenter().x < 0) {
-            this.setX(screenSize.x - this.getSize().width / 2);
-        }
-        if (this.getBottomCenter().x > screenSize.x) {
-            this.setX(this.getSize().width / 2);
+            vx = 0;
+            vy = 0;
         }
     }
 
@@ -134,12 +131,8 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
 
     @Override
     public void render(Graphics graphics) {
-        //Print absoluteMaxHeight as a score
-        graphics.setColor(Color.BLACK);
-        graphics.drawString("Score: " + getScore(), 20, 20);
-
         //Print the coordinates of the doodler
-        graphics.drawString("X: " + this.getPosition().x + "Y: " + this.getPosition().y, 20, 40);
+        //graphics.drawString("X: " + this.getPosition().x + "Y: " + this.getPosition().y, 20, 40);
 
         graphics.setColor(Color.BLUE);
         Vector2 drawPosition = this.getRenderCoordinate();
