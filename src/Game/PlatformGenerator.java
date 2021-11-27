@@ -23,6 +23,9 @@ public class PlatformGenerator {
     private static int generatePlatforms(int startY, int endY, Dimension screenSize, LinkedList<Platform> platformList) {
         int currentY = startY;
 
+        //TODO: Prevent platforms from being generated on top of each other
+        //TODO: Prevent platforms from being generated on top of the black hole
+
         while (currentY > endY) {
 
             int x = random.nextInt((int) (screenSize.width - Platform.width));

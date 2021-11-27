@@ -18,7 +18,7 @@ public abstract class Item extends Rectangle {
     public Item(Vector2 position, Dimension size) {
         this.position = position;
         this.setSize(size);
-        this.setBounds((int)this.position.x, (int)this.position.y, (int)this.getSize().width, (int)this.getSize().height);
+        this.setBounds((int)this.position.x, (int)this.position.y, this.getSize().width, this.getSize().height);
     }
 
     public void setX(float x) {
@@ -74,6 +74,11 @@ public abstract class Item extends Rectangle {
     public boolean isColliding(Item item) {
         return this.getTopLeft().x < item.getBottomRight().x && this.getBottomRight().x > item.getTopLeft().x &&
                 this.getTopLeft().y < item.getBottomRight().y && this.getBottomRight().y > item.getTopLeft().y;
+    }
+
+    public boolean isInside(Point point){
+        return this.getTopLeft().x <= point.x && this.getBottomRight().x >= point.x &&
+                this.getTopLeft().y <= point.y && this.getBottomRight().y >= point.y;
     }
 
     public boolean isCollidingFromTop(Item item){

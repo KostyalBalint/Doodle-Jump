@@ -34,6 +34,18 @@ public class Game implements UpdatableIF {
         Camera.getInstance().setPosition(0, 0);
     }
 
+    public void startGame() {
+        gameFrame.showGame();
+        GameLoop.getInstance().setUpdateFunction(this);
+        GameLoop.getInstance().start();
+    }
+
+    public void stopGame(){
+        gameFrame.getGameCanvas().renderGameOver();
+        gameFrame.repaint();
+        GameLoop.getInstance().stop();
+    }
+
     public static Game getInstance() {
         if (instance == null) {
             instance = new Game();
@@ -49,10 +61,7 @@ public class Game implements UpdatableIF {
             //If doodler is dead, camera will fall down with the doodler
             boolean gameOver = Camera.getInstance().fallDown(doodler, windowSize);
             if (gameOver) {
-                //Render game over screen
-                gameFrame.getCanvas().renderGameOver();
-                gameFrame.repaint();
-                GameLoop.getInstance().stop();
+                Game.getInstance().stopGame();
             }
         } else {
             //If doodler is not dead, camera follows doodler
@@ -80,7 +89,7 @@ public class Game implements UpdatableIF {
         }
         renderableList.addLast(doodler);
         renderableList.addLast(scoreRenderer);
-        gameFrame.getCanvas().paint(gameFrame.getCanvas().getGraphics(), renderableList);
+        gameFrame.getGameCanvas().paint(gameFrame.getGameCanvas().getGraphics(), renderableList);
         gameFrame.repaint();
     }
 
@@ -90,6 +99,10 @@ public class Game implements UpdatableIF {
 
     public Dimension getWindowSize() {
         return windowSize;
+    }
+
+    public GameFrame getGameFrame(){
+        return gameFrame;
     }
 
     public Doodler getDoodler() {

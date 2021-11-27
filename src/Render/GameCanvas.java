@@ -44,6 +44,7 @@ public class GameCanvas extends Canvas {
         g.drawImage(backGround, 0,0, null);
     }
 
+    //TODO: Move this to a new Canvas Class
     public void renderGameOver() {
         System.out.println("Game Over");
         Graphics g = getGraphics();

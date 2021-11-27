@@ -42,6 +42,7 @@ public class Camera implements UpdatableIF {
             vy *= 0.2;
             if(vy < 0.1) {
                 //Game Over
+                //TODO: This activates later if the player achieves grater score
                 return true;
             }
         } else {

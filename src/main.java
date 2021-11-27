@@ -6,12 +6,14 @@ public class main {
 
     public static void main(String[] args) {
 
+        Game.getInstance().getGameFrame().showMenu();
+
         try {
             gameLoop = GameLoop.getInstance();
             gameLoop.setUpdateFunction(Game.getInstance());
         }catch (Exception e) {
             e.printStackTrace();
         }
-        gameLoop.start();
+        //gameLoop.start();
     }
 }
