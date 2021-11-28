@@ -9,7 +9,6 @@ import java.awt.*;
 import java.util.LinkedList;
 
 import static Game.BlackHoleGenerator.generateBlackHole;
-import static Game.PlatformGenerator.generatePlatformsIfNeeded;
 
 public class Game implements UpdatableIF {
     private static Game instance;
@@ -20,6 +19,7 @@ public class Game implements UpdatableIF {
     private Doodler doodler;
     private BlackHole blackHole;
     private LinkedList<Platform> platformList;
+    private PlatformGenerator platformGenerator;
     private Score scoreRenderer;
 
     private Game() {
@@ -27,6 +27,7 @@ public class Game implements UpdatableIF {
         doodler = new Doodler(new Vector2(windowSize.width / 2.0f, windowSize.height / 2.0f), windowSize);
         //Ensure that the doodler is always have one platform underneath at start
         platformList.add(new Platform(new Vector2((windowSize.width - Platform.width) / 2.0f, windowSize.height)));
+        platformGenerator = new PlatformGenerator(this);
         scoreRenderer = new Score();
         gameFrame = new GameFrame(windowSize, doodler);
 
@@ -34,14 +35,24 @@ public class Game implements UpdatableIF {
         Camera.getInstance().setPosition(0, 0);
     }
 
+    public static Game reinitialize() {
+        //Reset the gameLoop
+        instance = new Game();
+        GameLoop.reinitialize().setUpdateFunction(instance);
+        return instance;
+    }
+
     public void startGame() {
+        //Start the gameLoop
+        GameLoop.getInstance().setUpdateFunction(Game.getInstance());
+
         gameFrame.showGame();
         GameLoop.getInstance().setUpdateFunction(this);
         GameLoop.getInstance().start();
     }
 
     public void stopGame(){
-        gameFrame.getGameCanvas().renderGameOver();
+        gameFrame.showGameOver();
         gameFrame.repaint();
         GameLoop.getInstance().stop();
     }
@@ -73,7 +84,7 @@ public class Game implements UpdatableIF {
         blackHole = generateBlackHole(this.blackHole, getScore(), windowSize);
 
         //Generate platforms if needed
-        generatePlatformsIfNeeded(doodler, windowSize, platformList);
+        platformGenerator.generatePlatformsIfNeeded(doodler, windowSize, platformList);
 
         //Remove platforms that are out of the screen
         platformList.removeIf(platform -> platform.getRenderCoordinate().y > windowSize.height);

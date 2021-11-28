@@ -2,6 +2,7 @@ package Game;
 
 import Item.Doodler;
 import Render.GameCanvas;
+import Render.GameOverCanvas;
 import Render.MenuCanvas;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ public class GameFrame extends JFrame {
 
     private final GameCanvas gameCanvas;
     private final MenuCanvas menuCanvas;
+    private final GameOverCanvas gameOverCanvas;
     private final KeyListener keyListener;
 
     public GameFrame(Dimension windowSize, Doodler doodler) {
@@ -24,27 +26,38 @@ public class GameFrame extends JFrame {
         setVisible(true);
 
         menuCanvas = new MenuCanvas(windowSize);
+        gameOverCanvas = new GameOverCanvas(windowSize);
         gameCanvas = new GameCanvas();
         keyListener = new DoodlerListener(doodler);
     }
 
+    private void removeCanvases() {
+        if (menuCanvas != null) getContentPane().remove(menuCanvas);
+        if (gameCanvas != null) getContentPane().remove(gameCanvas);
+        if (gameOverCanvas != null) getContentPane().remove(gameOverCanvas);
+    }
+
+    //TODO: Move this logic to a Menu class
     public void showGame() {
-        if(menuCanvas != null) getContentPane().remove(menuCanvas);
+        removeCanvases();
         gameCanvas.addKeyListener(keyListener);
-        //this.addKeyListener(keyListener);
-        System.out.println(this.getKeyListeners());
         getContentPane().add(gameCanvas);
         pack();
+        gameCanvas.requestFocus();
     }
 
-    public void showMenu(){
-        if(gameCanvas != null) getContentPane().remove(gameCanvas);
+    public void showMenu() {
+        removeCanvases();
         getContentPane().add(menuCanvas);
         pack();
+        menuCanvas.requestFocus();
     }
 
-    public void showGameOver(){
-
+    public void showGameOver() {
+        removeCanvases();
+        getContentPane().add(gameOverCanvas);
+        pack();
+        gameOverCanvas.requestFocus();
     }
 
     public GameCanvas getGameCanvas() {

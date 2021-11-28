@@ -1,5 +1,6 @@
 package Render;
 
+import Game.Game;
 import util.Vector2;
 
 import javax.imageio.ImageIO;
@@ -35,7 +36,7 @@ public class MenuCanvas extends Canvas {
             public void mouseClicked(MouseEvent e) {
                 if(startBtn.isInside(e.getPoint())){
                     System.out.println("Start Game");
-                    Game.Game.getInstance().startGame();
+                    Game.reinitialize().startGame();
                 };
             }
         };

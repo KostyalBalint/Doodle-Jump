@@ -8,14 +8,20 @@ public class GameLoop extends Thread {
     private UpdatableIF fn;
     private static GameLoop instance;
 
-    public GameLoop(){}
+    public GameLoop() {
+    }
 
-    public void setUpdateFunction(UpdatableIF fn){
+    public static GameLoop reinitialize() {
+        instance = new GameLoop();
+        return instance;
+    }
+
+    public void setUpdateFunction(UpdatableIF fn) {
         this.fn = fn;
     }
 
-    public static GameLoop getInstance(){
-        if(instance == null){
+    public static GameLoop getInstance() {
+        if (instance == null) {
             instance = new GameLoop();
         }
         return instance;

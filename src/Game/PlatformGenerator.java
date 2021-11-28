@@ -11,16 +11,20 @@ import java.util.Random;
 public class PlatformGenerator {
 
     private static Random random = new Random();
-    private static int platformsGeneratedHeight = Game.getInstance().getWindowSize().height;
+    private int platformsGeneratedHeight;
 
-    public static void generatePlatformsIfNeeded(Doodler doodler, Dimension windowSize, LinkedList<Platform> platformList) {
+    public PlatformGenerator(Game game) {
+        platformsGeneratedHeight = game.getWindowSize().height;
+    }
+
+    public void generatePlatformsIfNeeded(Doodler doodler, Dimension windowSize, LinkedList<Platform> platformList) {
         if (doodler.getAbsoluteMaxHeight() - windowSize.height < platformsGeneratedHeight) {
             platformsGeneratedHeight = generatePlatforms(platformsGeneratedHeight, platformsGeneratedHeight - windowSize.height, windowSize, platformList);
             //System.out.println("Current platform count: " + platformList.size());
         }
     }
 
-    private static int generatePlatforms(int startY, int endY, Dimension screenSize, LinkedList<Platform> platformList) {
+    private int generatePlatforms(int startY, int endY, Dimension screenSize, LinkedList<Platform> platformList) {
         int currentY = startY;
 
         //TODO: Prevent platforms from being generated on top of each other

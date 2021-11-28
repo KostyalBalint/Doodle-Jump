@@ -1,9 +1,5 @@
 package Render;
 
-import Game.Game;
-import util.TextUtil;
-import util.Vector2;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
@@ -44,18 +40,4 @@ public class GameCanvas extends Canvas {
         g.drawImage(backGround, 0,0, null);
     }
 
-    //TODO: Move this to a new Canvas Class
-    public void renderGameOver() {
-        System.out.println("Game Over");
-        Graphics g = getGraphics();
-        super.paint(g);
-        renderBackground(g);
-
-        //Print Game Over in the middle of the screen
-        g.setColor(Color.BLACK);
-        TextUtil.drawCenteredString(g, "Game Over", getBounds(), new Vector2(0, -100), font.deriveFont(Font.BOLD, 50));
-
-        //Print the score
-        TextUtil.drawCenteredString(g, "Score: " + Game.getInstance().getScore(), getBounds(), new Vector2(0, -50), font.deriveFont(Font.BOLD, 30));
-    }
 }
