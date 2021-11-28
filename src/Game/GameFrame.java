@@ -4,6 +4,7 @@ import Item.Doodler;
 import Render.GameCanvas;
 import Render.GameOverCanvas;
 import Render.MenuCanvas;
+import ScoreBoard.SaveScoreForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class GameFrame extends JFrame {
     private final GameCanvas gameCanvas;
     private final MenuCanvas menuCanvas;
     private final GameOverCanvas gameOverCanvas;
-    private final KeyListener keyListener;
+    private KeyListener keyListener;
 
     public GameFrame(Dimension windowSize, Doodler doodler) {
         super("Doodle Jump");
@@ -46,6 +47,11 @@ public class GameFrame extends JFrame {
         gameCanvas.requestFocus();
     }
 
+    public void setDoodler(Doodler doodler) {
+        keyListener = new DoodlerListener(doodler);
+        gameCanvas.addKeyListener(keyListener);
+    }
+
     public void showMenu() {
         removeCanvases();
         getContentPane().add(menuCanvas);
@@ -58,6 +64,11 @@ public class GameFrame extends JFrame {
         getContentPane().add(gameOverCanvas);
         pack();
         gameOverCanvas.requestFocus();
+    }
+
+    public void showSaveScore() {
+        SaveScoreForm saveScoreForm = new SaveScoreForm();
+        saveScoreForm.setVisible(true);
     }
 
     public GameCanvas getGameCanvas() {

@@ -18,6 +18,7 @@ public class GameOverCanvas extends Canvas {
     private Font font;
     private Button playAgainBtn;
     private Button menuBtn;
+    private Button saveScoreBtn;
     private MouseListener mouseListener;
 
     public GameOverCanvas(Dimension windowSize) {
@@ -31,6 +32,7 @@ public class GameOverCanvas extends Canvas {
             Vector2 pos = new Vector2((float) ((windowSize.width - playAgainBtn.getWidth()) / 2), (float) (windowSize.height / 2 + playAgainBtn.getHeight()));
             playAgainBtn = new Button((new Vector2((float) playAgainBtn.getWidth() * 0.7f, 0)).add(pos), ImageIO.read(new File("src/assets/play-again.png")));
             menuBtn = new Button((new Vector2((float) playAgainBtn.getWidth() * -0.7f, 0)).add(pos), ImageIO.read(new File("src/assets/menu.png")));
+            saveScoreBtn = new Button(new Vector2(0, playAgainBtn.height + 50).add(pos), ImageIO.read(new File("src/assets/play.png")));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
@@ -44,6 +46,10 @@ public class GameOverCanvas extends Canvas {
                 if (menuBtn.isInside(e.getPoint())) {
                     System.out.println("Show menu");
                     Game.getInstance().getGameFrame().showMenu();
+                }
+                if (saveScoreBtn.isInside(e.getPoint())) {
+                    System.out.println("Save score");
+                    Game.getInstance().getGameFrame().showSaveScore();
                 }
             }
         };
@@ -66,5 +72,6 @@ public class GameOverCanvas extends Canvas {
 
         playAgainBtn.render(g);
         menuBtn.render(g);
+        saveScoreBtn.render(g);
     }
 }
