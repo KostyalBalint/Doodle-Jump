@@ -36,7 +36,9 @@ public class SaveScoreForm extends JFrame {
             if (nameField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please enter a name", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                ScoreBoard.getInstance().addPlayer(new Player(nameField.getText(), Game.Game.getInstance().getScore()));
+                ScoreBoardData.getInstance().addPlayer(new Player(nameField.getText(), Game.Game.getInstance().getScore()));
+                JOptionPane.showMessageDialog(this, "Saved score", "Success", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
             }
         });
 

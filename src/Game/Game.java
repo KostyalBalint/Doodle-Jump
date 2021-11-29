@@ -24,12 +24,8 @@ public class Game implements UpdatableIF {
 
     private Game() {
         platformList = new LinkedList<Platform>();
-        doodler = new Doodler(new Vector2(windowSize.width / 2.0f, windowSize.height / 2.0f), windowSize);
-        //Ensure that the doodler is always have one platform underneath at start
-        platformList.add(new Platform(new Vector2((windowSize.width - Platform.width) / 2.0f, windowSize.height)));
-        platformGenerator = new PlatformGenerator(this);
-        scoreRenderer = new Score();
-        gameFrame = new GameFrame(windowSize, doodler);
+        initComonents(this);
+        gameFrame = new GameFrame(this.windowSize, this.doodler);
 
         //Init camera
         Camera.getInstance().setPosition(0, 0);
@@ -37,12 +33,7 @@ public class Game implements UpdatableIF {
 
     public static Game reinitialize() {
         Game game = Game.getInstance();
-        game.platformList = new LinkedList<Platform>();
-        game.doodler = new Doodler(new Vector2(game.windowSize.width / 2.0f, game.windowSize.height / 2.0f), game.windowSize);
-        //Ensure that the doodler is always have one platform underneath at start
-        game.platformList.add(new Platform(new Vector2((game.windowSize.width - Platform.width) / 2.0f, game.windowSize.height)));
-        game.platformGenerator = new PlatformGenerator(game);
-        game.scoreRenderer = new Score();
+        game.initComonents(game);
         game.gameFrame.setDoodler(game.doodler);
 
         //Init camera
@@ -51,6 +42,15 @@ public class Game implements UpdatableIF {
         //Reset the gameLoop
         GameLoop.reinitialize().setUpdateFunction(instance);
         return instance;
+    }
+
+    private void initComonents(Game game) {
+        game.platformList = new LinkedList<Platform>();
+        game.doodler = new Doodler(new Vector2(game.windowSize.width / 2.0f, game.windowSize.height / 2.0f), game.windowSize);
+        //Ensure that the doodler is always have one platform underneath at start
+        game.platformList.add(new Platform(new Vector2((game.windowSize.width - Platform.width) / 2.0f, game.windowSize.height)));
+        game.platformGenerator = new PlatformGenerator(game);
+        game.scoreRenderer = new Score();
     }
 
     public void startGame() {

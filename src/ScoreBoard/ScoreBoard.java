@@ -1,43 +1,51 @@
 package ScoreBoard;
 
-import java.util.LinkedList;
+import javax.swing.*;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class ScoreBoard {
+public class ScoreBoard extends JFrame {
+    private ScoreBoardData data;
 
-    private static ScoreBoard instance;
-    private static LinkedList<Player> players;
-    private static Player currentPlayer;
+    public ScoreBoard() {
+        super("Score Board");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-    private ScoreBoard() {
-        players = new LinkedList<>();
-    }
-
-    public static ScoreBoard getInstance() {
-        if (instance == null) {
-            instance = new ScoreBoard();
+        try {
+            data = ScoreBoardData.getInstance();
+            //TODO: Read data from file
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return instance;
-    }
 
-    public void addPlayer(Player player) {
-        currentPlayer = player;
-        Boolean found = false;
-        for (Player p : players) {
-            if (p.getName().equals(player.getName())) {
-                p.setScore(player.getScore());
-                found = true;
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    //TODO: Write data to file
+                    /*ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("students.dat"));
+                    oos.writeObject(data.students);
+                    oos.close();*/
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
-        }
-        if (!found) {
-            players.add(player);
-        }
+        });
+
+        setMinimumSize(new Dimension(500, 400));
+        initComponents();
     }
 
-    public void removePlayer(Player player) {
-        players.removeIf(p -> p.getName().equals(player.getName()));
-    }
+    private void initComponents() {
+        this.setLayout(new BorderLayout());
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+        //Table
+        JTable table = new JTable(data);
+        table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
+        table.setFillsViewportHeight(true);
+        this.add(new JScrollPane(table), BorderLayout.CENTER);
     }
 }

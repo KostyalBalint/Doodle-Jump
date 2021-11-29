@@ -15,6 +15,7 @@ public class GameFrame extends JFrame {
     private final GameCanvas gameCanvas;
     private final MenuCanvas menuCanvas;
     private final GameOverCanvas gameOverCanvas;
+    private SaveScoreForm saveScoreForm;
     private KeyListener keyListener;
 
     public GameFrame(Dimension windowSize, Doodler doodler) {
@@ -67,7 +68,8 @@ public class GameFrame extends JFrame {
     }
 
     public void showSaveScore() {
-        SaveScoreForm saveScoreForm = new SaveScoreForm();
+        if (saveScoreForm == null)
+            saveScoreForm = new SaveScoreForm();
         saveScoreForm.setVisible(true);
     }
 

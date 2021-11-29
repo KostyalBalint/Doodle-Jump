@@ -1,6 +1,7 @@
 package Render;
 
 import Game.Game;
+import ScoreBoard.ScoreBoard;
 import util.Vector2;
 
 import javax.imageio.ImageIO;
@@ -16,7 +17,9 @@ public class MenuCanvas extends Canvas {
     private Image text;
     private Font font;
     private Button startBtn;
+    private Button scoreBtn;
     private MouseListener mouseListener;
+    private ScoreBoard scoreBoard;
 
     public MenuCanvas(Dimension windowSize) {
         super();
@@ -26,18 +29,27 @@ public class MenuCanvas extends Canvas {
             text = ImageIO.read(new File("src/assets/doodle-jump-text.png"));
             font = Font.createFont(Font.TRUETYPE_FONT, new File("src/assets/DoodleJump.ttf"));
             startBtn = new Button(new Vector2(0, 0), ImageIO.read(new File("src/assets/play.png")));
-            Vector2 pos = new Vector2((float)((windowSize.width - startBtn.getWidth()) / 2), (float)(windowSize.height/2 + startBtn.getHeight()));
+            Vector2 pos = new Vector2((float) ((windowSize.width - startBtn.getWidth()) / 2), (float) (windowSize.height / 2 + startBtn.getHeight()));
             startBtn = new Button(pos, ImageIO.read(new File("src/assets/play.png")));
+            scoreBtn = new Button(new Vector2(0, 0), ImageIO.read(new File("src/assets/scores.png")));
+            scoreBtn = new Button(new Vector2(windowSize.width, windowSize.height).sub((float) scoreBtn.getWidth() + 20, (float) scoreBtn.getHeight() + 50), ImageIO.read(new File("src/assets/scores.png")));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
         mouseListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(startBtn.isInside(e.getPoint())){
+                if (startBtn.isInside(e.getPoint())) {
                     System.out.println("Start Game");
                     Game.reinitialize().startGame();
-                };
+                }
+                ;
+                if (scoreBtn.isInside(e.getPoint())) {
+                    System.out.println("Show Scores");
+                    if (scoreBoard == null)
+                        scoreBoard = new ScoreBoard();
+                    scoreBoard.setVisible(true);
+                }
             }
         };
         this.addMouseListener(mouseListener);
@@ -51,5 +63,6 @@ public class MenuCanvas extends Canvas {
         g.drawImage(backGround, 0,0, null);
         g.drawImage(text, (getWidth() - text.getWidth(null)) / 2, ((getHeight() - text.getHeight(null)) / 2) - getHeight() / 4, null);
         startBtn.render(g);
+        scoreBtn.render(g);
     }
 }
