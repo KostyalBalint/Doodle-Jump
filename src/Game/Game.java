@@ -46,7 +46,7 @@ public class Game implements UpdatableIF {
 
     private void initComonents(Game game) {
         game.platformList = new LinkedList<Platform>();
-        game.doodler = new Doodler(new Vector2(game.windowSize.width / 2.0f, game.windowSize.height / 2.0f), game.windowSize);
+        game.doodler = new Doodler(new Vector2(game.windowSize.width / 2.0f, game.windowSize.height / 2.0f));
         //Ensure that the doodler is always have one platform underneath at start
         game.platformList.add(new Platform(new Vector2((game.windowSize.width - Platform.width) / 2.0f, game.windowSize.height)));
         game.platformGenerator = new PlatformGenerator(game);

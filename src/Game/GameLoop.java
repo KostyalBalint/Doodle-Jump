@@ -50,7 +50,6 @@ public class GameLoop extends Thread {
             totalTime += System.nanoTime() - startTime;
             if(totalTime >= 1000000000){
                 //System.out.println("FPS: " + FPS);
-                //TODO: Add FPS to the game
                 totalTime = 0;
             }
         }

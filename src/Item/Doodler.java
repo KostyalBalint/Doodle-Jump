@@ -1,5 +1,6 @@
 package Item;
 
+import Game.Game;
 import Render.RenderableIF;
 import util.Vector2;
 
@@ -16,7 +17,6 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         NONE,
     }
 
-    private Dimension screenSize; //TODO: Remove this, and use Game.getWindowSize() instead
     private LinkedList<Platform> platforms;
     private BlackHole blackHole;
     private Image leftImage;
@@ -31,10 +31,9 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
     private boolean died = false;
 
     //Put the doodler in the middle of the screen
-    public Doodler(Vector2 position, Dimension screenSize) {
+    public Doodler(Vector2 position) {
         super(position.add(-50 / 2.0f, -25 / 2.0f), new Dimension(50, 50));
         absoluteMaxHeight = this.getPosition().y;
-        this.screenSize = screenSize;
         try {
             leftImage = ImageIO.read(new File("src/assets/doodler-left.png"));
             rightImage = ImageIO.read(new File("src/assets/doodler-right.png"));
@@ -55,7 +54,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
     }
 
     public boolean isDead() {
-        if (this.getRenderCoordinate().y > screenSize.height) {
+        if (this.getRenderCoordinate().y > Game.getInstance().getWindowSize().height) {
             died = true;
             vy = 0;
         }
@@ -99,9 +98,9 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
 
         //Limit the doodler into the screen
         if (this.getBottomCenter().x < 0) {
-            this.setX(screenSize.width - this.getSize().width / 2);
+            this.setX(Game.getInstance().getWindowSize().width - this.getSize().width / 2);
         }
-        if (this.getBottomCenter().x > screenSize.width) {
+        if (this.getBottomCenter().x > Game.getInstance().getWindowSize().width) {
             this.setX(this.getSize().width / 2);
         }
 

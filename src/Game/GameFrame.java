@@ -44,7 +44,6 @@ public class GameFrame extends JFrame {
         if (gameOverCanvas != null) getContentPane().remove(gameOverCanvas);
     }
 
-    //TODO: Move this logic to a Menu class
     public void showGame() {
         removeCanvases();
         gameCanvas.addKeyListener(keyListener);
