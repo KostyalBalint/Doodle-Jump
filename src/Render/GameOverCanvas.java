@@ -12,6 +12,13 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class is used to render the game over screen.
+ * Once the game is over, the player can click the playAgain button to restart the game.
+ * The MenuButton is used to go back to the main menu.
+ * The SaveScoreButton is used to save the score to the highscore list.
+ * Also the screen shows the score of the player.
+ */
 public class GameOverCanvas extends Canvas {
     private Image backGround;
     private Image text;
@@ -21,6 +28,12 @@ public class GameOverCanvas extends Canvas {
     private Button saveScoreBtn;
     private MouseListener mouseListener;
 
+    /**
+     * This method is used to initialize the game over screen.
+     * It loads the background image, the text image, the font, the buttons and the mouse listener.
+     *
+     * @param windowSize The size of the window.
+     */
     public GameOverCanvas(Dimension windowSize) {
         super();
         setBackground(Color.white);
@@ -56,6 +69,11 @@ public class GameOverCanvas extends Canvas {
         this.addMouseListener(mouseListener);
     }
 
+    /**
+     * This method is used to render the game over screen, buttons, text and background.
+     *
+     * @param g The graphics object.
+     */
     public void paint(Graphics g) {
         super.paint(g);
         if (font != null) {

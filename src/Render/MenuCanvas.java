@@ -12,6 +12,11 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Menu Canvas is a canvas that is used to display the menu.
+ * Start button is used to start the game.
+ * Score button is used to display the score board.
+ */
 public class MenuCanvas extends Canvas {
     private Image backGround;
     private Image text;
@@ -21,6 +26,13 @@ public class MenuCanvas extends Canvas {
     private MouseListener mouseListener;
     private ScoreBoard scoreBoard;
 
+    /**
+     * Constructor for the Menu Canvas.
+     * Loads the background image and the button images.
+     * Sets the mouse listener for the buttons.
+     *
+     * @param windowSize The size of the window.
+     */
     public MenuCanvas(Dimension windowSize) {
         super();
         setBackground(Color.white);
@@ -55,12 +67,17 @@ public class MenuCanvas extends Canvas {
         this.addMouseListener(mouseListener);
     }
 
+    /**
+     * Paints the background image and the buttons.
+     *
+     * @param g The graphics object.
+     */
     public void paint(Graphics g) {
         super.paint(g);
         if (font != null) {
             g.setFont(font.deriveFont(Font.BOLD, 20));
         }
-        g.drawImage(backGround, 0,0, null);
+        g.drawImage(backGround, 0, 0, null);
         g.drawImage(text, (getWidth() - text.getWidth(null)) / 2, ((getHeight() - text.getHeight(null)) / 2) - getHeight() / 4, null);
         startBtn.render(g);
         scoreBtn.render(g);

@@ -10,6 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
+/**
+ * Doodler class this is the player controlled character
+ */
 public class Doodler extends Item implements UpdatableIF, RenderableIF {
     public static enum Dir {
         LEFT,
@@ -30,7 +33,13 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
     private float absoluteMaxHeight = 0;
     private boolean died = false;
 
-    //Put the doodler in the middle of the screen
+    /**
+     * Constructor of the doodler
+     * Doodler uses different images for left and right
+     * Doodler hitbox is smaller than the image
+     *
+     * @param position Vector2 position of the doodler
+     */
     public Doodler(Vector2 position) {
         super(position.add(-50 / 2.0f, -25 / 2.0f), new Dimension(50, 50));
         absoluteMaxHeight = this.getPosition().y;
@@ -38,6 +47,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
             leftImage = ImageIO.read(new File("src/assets/doodler-left.png"));
             rightImage = ImageIO.read(new File("src/assets/doodler-right.png"));
             this.setImage(leftImage);
+            //Put the doodler in the middle of the screen
             //Collision box is different size than the doodler image, this is because the left and right images
             this.setSize(new Dimension(this.getImage().getWidth(null) / 2, 2 * this.getImage().getHeight(null) / 3));
         } catch (IOException e) {
@@ -45,14 +55,29 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         }
     }
 
+    /**
+     * Get the absolute max height of the doodler
+     *
+     * @return float: Absolute max height
+     */
     public float getAbsoluteMaxHeight() {
         return absoluteMaxHeight;
     }
 
+    /**
+     * Get the velocity of the doodler
+     *
+     * @return Vector2: Velocity of the doodler
+     */
     public Vector2 getVelocity() {
         return new Vector2(vx, vy);
     }
 
+    /**
+     * Determine if the doodler is dead, once the doodler is dead, it will not be able to jump
+     *
+     * @return
+     */
     public boolean isDead() {
         if (this.getRenderCoordinate().y > Game.getInstance().getWindowSize().height) {
             died = true;
@@ -61,6 +86,11 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         return died;
     }
 
+    /**
+     * Doodler accelerates in the X coordinate
+     *
+     * @param ax acceleration
+     */
     public void setAcceleration(Dir ax) {
         switch (ax) {
             case LEFT:
@@ -75,6 +105,12 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         }
     }
 
+    /**
+     * Update the doodler
+     * This handles gravity, user acceleration, velocity, and collision with the black hole
+     * The doodler can only jump if it is on a platform
+     * The doodler horizontal movement is limited into the screen
+     */
     public void update() {
         this.setY((this.getPosition().y + vy));
         this.setX((this.getPosition().x + vx));
@@ -116,19 +152,31 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         if (!onPlatform) vy += g;    //Affect doodler by gravity
 
         //Check if doodler is colliding with the black hole
-        if(blackHole != null && this.isColliding(blackHole)) {
+        if (blackHole != null && this.isColliding(blackHole)) {
             died = true;
             vx = 0;
             vy = 0;
         }
     }
 
+    /**
+     * Update function for the doodler, this sets platform and black hole
+     *
+     * @param platforms The platforms that the doodler can jump on
+     * @param blackHole The black hole that the doodler can collide with
+     */
     public void update(LinkedList<Platform> platforms, BlackHole blackHole) {
         this.platforms = platforms;
         this.blackHole = blackHole;
         update();
     }
 
+    /**
+     * Renders the doodler
+     * The doodler's image is bigger than the hitbox, so we need to render it offset
+     *
+     * @param graphics Graphics object where the doodler is rendered
+     */
     @Override
     public void render(Graphics graphics) {
         //Print the coordinates of the doodler

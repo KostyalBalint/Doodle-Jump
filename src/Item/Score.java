@@ -5,7 +5,15 @@ import Render.RenderableIF;
 
 import java.awt.*;
 
+/**
+ * The score display in the top left corner of the screen.
+ */
 public class Score implements RenderableIF {
+    /**
+     * Render function, this get's the score and displays it.
+     *
+     * @param graphics The graphics object to draw on.
+     */
     @Override
     public void render(Graphics graphics) {
         //Print absoluteMaxHeight as a score

@@ -8,11 +8,20 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Black hole item.
+ */
 public class BlackHole extends Item implements RenderableIF {
 
     public static int width = 150;
     public static int height = 150;
 
+    /**
+     * Constructor of the BlackHole class.
+     * This loads the image of the black hole from file
+     *
+     * @param position The position of the black hole.
+     */
     public BlackHole(Vector2 position) {
         super(position, new Dimension(width, height));
         try {
@@ -23,6 +32,11 @@ public class BlackHole extends Item implements RenderableIF {
         }
     }
 
+    /**
+     * Renders the black hole
+     *
+     * @param graphics
+     */
     @Override
     public void render(Graphics graphics) {
         //Print the black hole position as a text

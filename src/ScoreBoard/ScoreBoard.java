@@ -4,12 +4,17 @@ import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
+/**
+ * ScoreBoard window
+ * This renders a table with all the scores
+ */
 public class ScoreBoard extends JFrame {
     private ScoreBoardData data;
 
+    /**
+     * Constructor creats a new ScoreBoard window
+     */
     public ScoreBoard() {
         super("Score Board");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -20,17 +25,14 @@ public class ScoreBoard extends JFrame {
             ex.printStackTrace();
         }
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-
-            }
-        });
-
         setMinimumSize(new Dimension(500, 400));
         initComponents();
     }
 
+    /**
+     * Initialize the components
+     * Add the table to the window
+     */
     private void initComponents() {
         this.setLayout(new BorderLayout());
 

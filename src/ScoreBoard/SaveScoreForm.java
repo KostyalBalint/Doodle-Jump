@@ -3,10 +3,18 @@ package ScoreBoard;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Form for saving scores
+ */
 public class SaveScoreForm extends JFrame {
 
     private JTextField nameField;
 
+    /**
+     * Constructor creates the form
+     * The form contains a text field for the name of the player and a button for saving the score
+     * When the button is pressed, the score is saved to memory and file as well
+     */
     public SaveScoreForm() {
         setTitle("Save Score");
         setSize(300, 150);
@@ -34,6 +42,7 @@ public class SaveScoreForm extends JFrame {
         cancelButton.addActionListener(e -> dispose());
         saveButton.addActionListener(e -> {
             if (nameField.getText().isEmpty()) {
+                //When the name field is empty, show an error message
                 JOptionPane.showMessageDialog(this, "Please enter a name", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 ScoreBoardData.getInstance().addPlayer(new Player(nameField.getText(), Game.Game.getInstance().getScore()));

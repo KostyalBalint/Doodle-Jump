@@ -9,15 +9,34 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Generates platforms for the game.
+ * This ensures that the platforms are not too close to each other (no overlapping).
+ * Also ensures that the platforms are not too close to the black hole.
+ */
 public class PlatformGenerator {
 
     private static Random random = new Random();
     private int platformsGeneratedHeight;
 
+    /**
+     * Constructor for the generator.
+     *
+     * @param game Game object
+     */
     public PlatformGenerator(Game game) {
         platformsGeneratedHeight = game.getWindowSize().height;
     }
 
+    /**
+     * Generates platforms for the game, if we need new ones
+     * There is always one screen height of platforms ready out of the screen
+     *
+     * @param doodler      Doodler object
+     * @param windowSize   Window size
+     * @param platformList List of platforms
+     * @param blackHole    Black hole object
+     */
     public void generatePlatformsIfNeeded(Doodler doodler, Dimension windowSize, LinkedList<Platform> platformList, BlackHole blackHole) {
         if (doodler.getAbsoluteMaxHeight() - windowSize.height < platformsGeneratedHeight) {
             platformsGeneratedHeight = generatePlatforms(platformsGeneratedHeight, platformsGeneratedHeight - windowSize.height, windowSize, platformList, blackHole);
@@ -25,6 +44,18 @@ public class PlatformGenerator {
         }
     }
 
+    /**
+     * Generates platforms for the game, ensures that the platforms are not too close to each other (no overlapping)
+     * Also ensures that the platforms are not too close to the black hole
+     * Platforms delta Y is in a range of Platform.height*3 to Doodler.maxJumpHeight/2
+     *
+     * @param startY       Y coordinate of the first platform
+     * @param endY         Platforms will be generated at least until this Y coordinate
+     * @param screenSize   Window size
+     * @param platformList List of platforms
+     * @param blackHole    Black hole object
+     * @return
+     */
     private int generatePlatforms(int startY, int endY, Dimension screenSize, LinkedList<Platform> platformList, BlackHole blackHole) {
         int currentY = startY;
 

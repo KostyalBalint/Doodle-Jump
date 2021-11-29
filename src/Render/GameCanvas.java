@@ -5,11 +5,19 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Canvas for the game
+ * This will draw the background, the doodler, the platforms, the black hole, and the score
+ */
 public class GameCanvas extends Canvas {
 
     private Image backGround;
     private Font font;
 
+    /**
+     * Loads the background image
+     * Loads the Doodle Jump font
+     */
     public GameCanvas() {
         super();
         setBackground(Color.white);
@@ -25,6 +33,12 @@ public class GameCanvas extends Canvas {
         }
     }
 
+    /**
+     * Paint the canvas
+     *
+     * @param g     The graphics object where the canvas is painted
+     * @param items The items to be rendered
+     */
     public void paint(Graphics g, Iterable<RenderableIF> items) {
         super.paint(g);
         if (font != null) {
@@ -36,8 +50,13 @@ public class GameCanvas extends Canvas {
         }
     }
 
+    /**
+     * Renders the background
+     *
+     * @param g The graphics object where the background is rendered
+     */
     private void renderBackground(Graphics g) {
-        g.drawImage(backGround, 0,0, null);
+        g.drawImage(backGround, 0, 0, null);
     }
 
 }
