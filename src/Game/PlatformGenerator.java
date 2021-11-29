@@ -38,8 +38,8 @@ public class PlatformGenerator {
      * @param blackHole    Black hole object
      */
     public void generatePlatformsIfNeeded(Doodler doodler, Dimension windowSize, LinkedList<Platform> platformList, BlackHole blackHole) {
-        if (doodler.getAbsoluteMaxHeight() - windowSize.height < platformsGeneratedHeight) {
-            platformsGeneratedHeight = generatePlatforms(platformsGeneratedHeight, platformsGeneratedHeight - windowSize.height, windowSize, platformList, blackHole);
+        if (doodler.getAbsoluteMaxHeight() - windowSize.height / 2 < platformsGeneratedHeight) {
+            platformsGeneratedHeight = generatePlatforms(platformsGeneratedHeight, platformsGeneratedHeight - windowSize.height / 2, windowSize, platformList, blackHole);
             //System.out.println("Current platform count: " + platformList.size());
         }
     }
