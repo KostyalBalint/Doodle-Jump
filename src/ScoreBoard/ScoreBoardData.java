@@ -16,7 +16,7 @@ public class ScoreBoardData extends AbstractTableModel {
     /**
      * Constructor sets the players list to an empty LinkedList.
      */
-    private ScoreBoardData() {
+    ScoreBoardData() {
         players = new LinkedList<>();
     }
 
