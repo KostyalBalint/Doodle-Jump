@@ -29,8 +29,8 @@ public class BlackHole extends Item implements RenderableIF {
         //graphics.setColor(Color.BLACK);
         //graphics.drawString("Black Hole: X: " + (int)this.getPosition().x + " Y: " + (int)this.getPosition().y, 20, 60);
 
-        graphics.setColor(Color.BLACK);
-        //graphics.fillOval((int)this.getRenderCoordinate().x, (int)this.getRenderCoordinate().y, this.getSize().width, this.getSize().height);
-        graphics.drawImage(this.getImage(), (int)this.getRenderCoordinate().x, (int)this.getRenderCoordinate().y, null);
+        graphics.setColor(Color.BLUE);
+        //graphics.fillRect((int)this.getRenderCoordinate().x, (int)this.getRenderCoordinate().y, this.getSize().width, this.getSize().height);
+        graphics.drawImage(this.getImage(), (int) this.getRenderCoordinate().x, (int) this.getRenderCoordinate().y, null);
     }
 }

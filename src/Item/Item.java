@@ -72,11 +72,13 @@ public abstract class Item extends Rectangle {
     }
 
     public boolean isColliding(Item item) {
+        if (item == null) return false;
         return this.getTopLeft().x < item.getBottomRight().x && this.getBottomRight().x > item.getTopLeft().x &&
                 this.getTopLeft().y < item.getBottomRight().y && this.getBottomRight().y > item.getTopLeft().y;
     }
 
     public boolean isInside(Point point){
+        if (point == null) return false;
         return this.getTopLeft().x <= point.x && this.getBottomRight().x >= point.x &&
                 this.getTopLeft().y <= point.y && this.getBottomRight().y >= point.y;
     }

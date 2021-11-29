@@ -40,7 +40,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
             rightImage = ImageIO.read(new File("src/assets/doodler-right.png"));
             this.setImage(leftImage);
             //Collision box is different size than the doodler image, this is because the left and right images
-            this.setSize(new Dimension(this.getImage().getWidth(null) / 2, this.getImage().getHeight(null)));
+            this.setSize(new Dimension(this.getImage().getWidth(null) / 2, 2 * this.getImage().getHeight(null) / 3));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,9 +135,10 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
         //Print the coordinates of the doodler
         //graphics.drawString("X: " + this.getPosition().x + "Y: " + this.getPosition().y, 20, 40);
 
-        graphics.setColor(Color.BLUE);
+        graphics.setColor(Color.ORANGE);
         Vector2 drawPosition = this.getRenderCoordinate();
         //graphics.fillRect((int) drawPosition.x, (int) drawPosition.y, this.getSize().width, this.getSize().height);
-        graphics.drawImage(this.getImage(), (int) (drawPosition.x - ((this.getImage().getWidth(null) - this.getWidth()) / 2)), (int) drawPosition.y, /*this.getSize().width, this.getSize().height,*/ null);
+        graphics.drawImage(this.getImage(), (int) (drawPosition.x - ((this.getImage().getWidth(null) - this.getWidth()) / 2)),
+                (int) (drawPosition.y - (this.getImage().getHeight(null) / 3)), null);
     }
 }

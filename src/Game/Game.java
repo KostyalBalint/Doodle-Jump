@@ -95,7 +95,7 @@ public class Game implements UpdatableIF {
         blackHole = generateBlackHole(this.blackHole, getScore(), windowSize);
 
         //Generate platforms if needed
-        platformGenerator.generatePlatformsIfNeeded(doodler, windowSize, platformList);
+        platformGenerator.generatePlatformsIfNeeded(doodler, windowSize, platformList, blackHole);
 
         //Remove platforms that are out of the screen
         platformList.removeIf(platform -> platform.getRenderCoordinate().y > windowSize.height);

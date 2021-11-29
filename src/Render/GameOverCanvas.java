@@ -32,7 +32,7 @@ public class GameOverCanvas extends Canvas {
             Vector2 pos = new Vector2((float) ((windowSize.width - playAgainBtn.getWidth()) / 2), (float) (windowSize.height / 2 + playAgainBtn.getHeight()));
             playAgainBtn = new Button((new Vector2((float) playAgainBtn.getWidth() * 0.7f, 0)).add(pos), ImageIO.read(new File("src/assets/play-again.png")));
             menuBtn = new Button((new Vector2((float) playAgainBtn.getWidth() * -0.7f, 0)).add(pos), ImageIO.read(new File("src/assets/menu.png")));
-            saveScoreBtn = new Button(new Vector2(0, playAgainBtn.height + 50).add(pos), ImageIO.read(new File("src/assets/play.png")));
+            saveScoreBtn = new Button(new Vector2(0, playAgainBtn.height + 50).add(pos), ImageIO.read(new File("src/assets/save-score.png")));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }

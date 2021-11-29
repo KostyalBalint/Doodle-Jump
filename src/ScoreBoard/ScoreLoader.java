@@ -30,7 +30,6 @@ public class ScoreLoader extends org.xml.sax.helpers.DefaultHandler {
     }
 
     public void startElement(String namespaceURI, String sName, String qName, Attributes attrs) throws SAXException {
-        System.out.println("Start Element :" + qName);
         if (qName.equals("players")) {
             mainElement = "players";
         }
