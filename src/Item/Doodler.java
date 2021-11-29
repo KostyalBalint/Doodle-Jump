@@ -57,6 +57,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
     public boolean isDead() {
         if (this.getRenderCoordinate().y > screenSize.height) {
             died = true;
+            vy = 0;
         }
         return died;
     }

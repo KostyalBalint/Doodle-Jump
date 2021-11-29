@@ -37,30 +37,18 @@ public class Camera implements UpdatableIF {
         this.position.y = y;
     }
 
-    public boolean fallWithDoodler(Doodler doodler, Vector2 screenSize) {
-        if(this.position.y + 1.5 * screenSize.y < doodler.getAbsoluteMaxHeight()) {
-            vy *= 0.2;
-            if(vy < 0.1) {
-                //Game Over
-                //TODO: This activates later if the player achieves grater score
-                return true;
-            }
-        } else {
-            vy = doodler.getVelocity().y * 1.5f;
-        }
-        this.position.y -= vy;
-        return false;
-    }
-
     public boolean fallDown(Doodler doodler, Dimension screenSize) {
-        if (this.position.y + 1.5 * screenSize.height < doodler.getAbsoluteMaxHeight()) {
+        if ((-1 * doodler.getAbsoluteMaxHeight()) - this.position.y > screenSize.getHeight()) {
             vy *= 0.6;
             if (vy < 0.1) {
                 //Game Over
                 return true;
             }
         } else {
-            vy += 1f;
+            vy += 0.8f;
+            if (vy >= 30) {
+                vy = 30;
+            }
             this.setY(this.getPosition().y - vy);
         }
         return false;
