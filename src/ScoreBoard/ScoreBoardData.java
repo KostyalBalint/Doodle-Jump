@@ -42,6 +42,10 @@ public class ScoreBoardData extends AbstractTableModel {
         return currentPlayer;
     }
 
+    public LinkedList<Player> getPlayers() {
+        return players;
+    }
+
     @Override
     public int getRowCount() {
         return players.size();

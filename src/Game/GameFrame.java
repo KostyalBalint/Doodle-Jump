@@ -5,6 +5,8 @@ import Render.GameCanvas;
 import Render.GameOverCanvas;
 import Render.MenuCanvas;
 import ScoreBoard.SaveScoreForm;
+import ScoreBoard.ScoreBoardData;
+import ScoreBoard.ScoreLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +33,9 @@ public class GameFrame extends JFrame {
         gameOverCanvas = new GameOverCanvas(windowSize);
         gameCanvas = new GameCanvas();
         keyListener = new DoodlerListener(doodler);
+
+        //Load scores
+        ScoreLoader.loadScores(ScoreBoardData.getInstance(), "scores.xml");
     }
 
     private void removeCanvases() {

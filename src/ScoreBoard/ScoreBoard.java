@@ -16,7 +16,6 @@ public class ScoreBoard extends JFrame {
 
         try {
             data = ScoreBoardData.getInstance();
-            //TODO: Read data from file
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -24,14 +23,7 @@ public class ScoreBoard extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                try {
-                    //TODO: Write data to file
-                    /*ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("students.dat"));
-                    oos.writeObject(data.students);
-                    oos.close();*/
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+
             }
         });
 
