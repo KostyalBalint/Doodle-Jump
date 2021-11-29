@@ -20,8 +20,7 @@ public class GameLoop extends Thread {
 
     /**
      * Resets the GameLoop instance
-     *
-     * @return
+     * @return GameLoop The GameLoop instance
      */
     public static GameLoop reinitialize() {
         instance = new GameLoop();

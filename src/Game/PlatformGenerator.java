@@ -54,7 +54,7 @@ public class PlatformGenerator {
      * @param screenSize   Window size
      * @param platformList List of platforms
      * @param blackHole    Black hole object
-     * @return
+     * @return Y coordinate of the last platform, platforms are generated until this Y coordinate
      */
     private int generatePlatforms(int startY, int endY, Dimension screenSize, LinkedList<Platform> platformList, BlackHole blackHole) {
         int currentY = startY;

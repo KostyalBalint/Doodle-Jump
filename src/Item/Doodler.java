@@ -76,7 +76,7 @@ public class Doodler extends Item implements UpdatableIF, RenderableIF {
     /**
      * Determine if the doodler is dead, once the doodler is dead, it will not be able to jump
      *
-     * @return
+     * @return boolean: True if the doodler is dead, false otherwise
      */
     public boolean isDead() {
         if (this.getRenderCoordinate().y > Game.getInstance().getWindowSize().height) {

@@ -34,8 +34,7 @@ public class BlackHole extends Item implements RenderableIF {
 
     /**
      * Renders the black hole
-     *
-     * @param graphics
+     * @param graphics The graphics object to draw on.
      */
     @Override
     public void render(Graphics graphics) {

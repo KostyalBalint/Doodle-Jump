@@ -216,7 +216,7 @@ public class Game implements UpdatableIF {
     /**
      * Gets all the current platforms
      *
-     * @return LinkedList<Item.Platform> All the platforms
+     * @return LinkedList All the platforms
      */
     public LinkedList<Platform> getPlatformList() {
         return platformList;

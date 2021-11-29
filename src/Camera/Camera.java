@@ -83,7 +83,7 @@ public class Camera implements UpdatableIF {
      *
      * @param doodler    The doodler
      * @param screenSize The size of the screen
-     * @return True if the camera has fallen down => Game over
+     * @return True if the camera has fallen down
      */
     public boolean fallDown(Doodler doodler, Dimension screenSize) {
         if ((-1 * doodler.getAbsoluteMaxHeight()) - this.position.y > screenSize.getHeight()) {
